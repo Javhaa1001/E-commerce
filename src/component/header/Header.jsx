@@ -4,7 +4,7 @@ import Main from '../main/Main';
 import Posts from '../Posts';
 import PostLists from '../PostList';
 import Post from '../Post';
-import About from '../About';
+import List from '../List';
 import Stats from '../Stats';
 import Login from '../Login';
 import NoMatch from '../No';
@@ -28,7 +28,7 @@ function Header() {
         <nav className="flex flex-row gap-[20px] mr-[30px]">
           <Link to="/" className="text-white text-[18px] no-underline">Home</Link>
           <Link to="/posts" className="text-white text-[18px] no-underline">Posts</Link>
-          <Link to="/about" className="text-white text-[18px] no-underline">About</Link>
+          <Link to="/list" className="text-white text-[18px] no-underline">List</Link>
           {user && <Link to="/stats" className="text-white text-[18px] no-underline">Stats</Link>}
           <span className="text-white"> | </span>
           {!user && <Link to="/login" className="text-white text-[18px] no-underline">Login</Link>}
@@ -43,7 +43,7 @@ function Header() {
           <Route index element={<PostLists />} />
           <Route path=":slug" element={<Post />} />
         </Route>
-        <Route path="/about" element={<About />} />
+        <Route path="/list" element={<List />} />
         <Route path="/login" element={<Login onLogin={setUser} />} />
         <Route path="/stats" element={<Stats user={user} />} />
         <Route path="*" element={<NoMatch />} />

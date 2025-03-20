@@ -28,9 +28,9 @@ export default function Fill({ products }) {
   });
 
   return (
-      <div className="flex flex-row w-[95vw]">
+      <div className="flex flex-row w-[100vw]">
         <div className="w-[30vw]">
-          <h2 className="mt-[100px] ml-[50px]">Filter</h2>
+          <h2 className="mt-[90px] mb-[20px] ml-[50px]">Filter</h2>
           <form className="ml-[50px]">
             <div className="mb-[10px]">
               <h5 className="ml-[15px]">Name</h5>

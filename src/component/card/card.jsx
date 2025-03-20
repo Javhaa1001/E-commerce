@@ -42,23 +42,23 @@ export default function App({ products }) {
   };
 
   return (
-    <div className='flex flex-col p-2.5 w-[65vw]'>
+    <div className='flex flex-col p-2.5 w-[68vw]'>
       <ToastContainer />
       <div className="flex justify-end">
         {!showModal && 
           <button
-            className="bg-blue-600 text-white p-1.5 px-5 border-2 border-blue-600 rounded-md mb-3 mx-2"
+            className="bg-blue-600 text-white p-1.5 px-8 border-2 border-blue-600 rounded-md mb-3 mx-2"
             onClick={toggle}
           >
             Cart ({cartItems.length})
           </button>
         }
       </div>
-      <div className="grid grid-cols-3">
+      <div className="grid grid-cols-3 justify-items-center ">
         {products?.map(product => {
           const cartItem = cartItems.find((item) => item.id === product.id);
           return (
-            <div key={product.id} className="w-[216px] h-auto rounded-md border-2 border-blue-700 p-3.5 m-2.5">
+            <div key={product.id} className="w-[226px] flex  flex-col justify-center items-center h-auto rounded-md border-2 border-blue-700 p-3.5 m-2.5">
               <div className="w-[185px] flex justify-center items-center">
                 <img src={product.picture} className="w-full" alt="" />
               </div>
@@ -67,8 +67,9 @@ export default function App({ products }) {
                 <div className="text-black text-lg">{product.name}</div>
                 <div>${product.price}</div>
               </div>
-
-              <ColorList colors={product.colors} />
+              <div className="flex justify-start w-full">
+                <ColorList colors={product.colors} />
+              </div>
 
               <div className="flex justify-center">
                 {!cartItem ? (

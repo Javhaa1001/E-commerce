@@ -1,18 +1,11 @@
 import { Navigate } from "react-router-dom";
-function Stats({ user }) {
+import React from "react";
 
-    if(!user) {
-      return (
-        <Navigate to="/login" replace/>
-      );
-    }
-    
-    return (
-      <div style={{ padding: 20  ,  marginTop: "15vh"}}>
-        <h2>Stats View</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adip.</p>
-      </div>
-    );
+const Stats = ({ user }) => {
+  if (!user) {
+    return <Navigate to="/login" replace />;
   }
+  <h5 className="mt-[16vh] text-black">HAloo</h5>
+  };
 
-  export default Stats;
+export default Stats;

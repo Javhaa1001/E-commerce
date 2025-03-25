@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import App from "../card/card";
 
-export default function Fill({ products }) {
+
+
+export default function Fill({products, user}) {
+  
+
   const [filters, setFilters] = useState({
     name: "",
     minPrice: "",
@@ -16,16 +20,17 @@ export default function Fill({ products }) {
     }));
   }
 
-  const filteredProducts = products.filter((item) => {
+  const filteredProducts = products?.filter((item) => {
+    let colors = item.color.split(',')
     return (
-      (!filters.name || item.name.toLowerCase().includes(filters.name.toLowerCase())) &&
-      (!filters.color ||
-        (Array.isArray(item.colors) &&
-          item.colors.some((c) => c.toLowerCase().includes(filters.color.toLowerCase())))) &&
+      (!filters.name || item.title.toLowerCase().includes(filters.name.toLowerCase())) &&
+      (!filters.color || colors.some((color) => filters.color.includes(color))) &&
       (!filters.minPrice || item.price >= parseFloat(filters.minPrice)) &&
       (!filters.maxPrice || item.price <= parseFloat(filters.maxPrice))
     );
   });
+  
+  
 
   return (
       <div className="flex flex-row w-[100vw]">
@@ -42,12 +47,12 @@ export default function Fill({ products }) {
               />
             </div>
             <div className="mb-[10px]">
-              <h5 className="ml-[15px]">Select Color</h5>
-              <input
-                type="text"
-                value={filters.color}
-                onChange={(e) => handleFilterChange("color", e.target.value)}
-                className="h-[30px] w-[200px] border-2 border-gray-400 rounded-[10px] mb-[10px]"
+                <h5 className="ml-[15px]">Select Color</h5>
+                <input
+                  type="text"
+                  value={filters.color}
+                  onChange={(e) => handleFilterChange("color", e.target.value)}
+                  className="h-[30px] w-[200px] border-2 border-gray-400 rounded-[10px] mb-[10px]"
               />
             </div>
             <div className="mb-[10px]">
@@ -71,7 +76,7 @@ export default function Fill({ products }) {
             </div>
           </form>
         </div>
-      <App products={filteredProducts} />
+      <App products={filteredProducts} user={user}/>
     </div>
   );
 }

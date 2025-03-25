@@ -1,14 +1,19 @@
 import PropTypes from 'prop-types'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { CartContext } from '../../context/cart.jsx'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import ColorList from '../ColorList.jsx'
 import '../../index.css'
+import ColorListCart from '../ColorListCart.jsx'
+import {  useNavigate } from 'react-router-dom'
 
-export default function Cart ({showModal, toggle}) {
+export default function Cart ({showModal, toggle, user}) {
+  const navigate = useNavigate();
 
-  const { cartItems, addToCart, removeFromCart, clearCart, getCartTotal } = useContext(CartContext)
+  
+  const [ setSelectedColor] = useState(null)
+
+  const { cartItems, addToCart, removeFromCart, clearCart, getCartTotal, setCartItems } = useContext(CartContext)
 
   const notifyRemovedFromCart = (item) => toast.error(`${item.name} removed from cart!`, {
     position: 'top-center',
@@ -43,6 +48,21 @@ export default function Cart ({showModal, toggle}) {
     notifyRemovedFromCart(product)
   }
 
+  const handleColorChange = (color) => {
+    setSelectedColor(color);
+  };
+
+  const checkUser = () => {
+    if (!user) {
+      navigate("/login");
+    }
+    else{
+      setCartItems([]);
+      alert("Төлбөр амжилттай")
+    }
+  };
+
+
   return (
     showModal && (
       <div className="fixed top-0 left-[55%] w-[45%] h-screen bg-white text-black p-[40px] z-[1000] flex flex-col items-center gap-[20px] text-[14px] rounded-[8px]">
@@ -55,12 +75,18 @@ export default function Cart ({showModal, toggle}) {
         <div className="cart-items">
           {cartItems.map((item) => (
             <div className="flex justify-between items-center w-full gap-[20px] mb-[3vh]" key={item.id}>
-              <img src={item.picture} alt={item.name} className="w-[80px] h-[80px] rounded-[8px]" />
+              <img src={item.img} alt={item.title} className="w-[80px] h-[80px] rounded-[8px]" />
   
               <div>
                 <h1 className="text-lg font-bold">{item.name}</h1>
-                <ColorList colors={item.colors} />
                 <p>${item.price}</p>
+              </div>
+              <div>     
+                <ColorListCart 
+                  colors= {item.color.split(",")} 
+                  color={item.colors}
+                  onColorChange={handleColorChange}
+              />
               </div>
   
               <div className="flex gap-[10px] items-center">
@@ -103,7 +129,12 @@ export default function Cart ({showModal, toggle}) {
             >
               Clear cart
             </button>
+            <button 
+              className="bg-[#3557BD] text-white p-[10px_20px] rounded-[5px] border-[1px] border-black"
+              onClick={() => checkUser()}>Buy</button>
           </div>
+
+            
         ) : (
           <h1 className="text-lg font-bold">Your cart is empty</h1>
         )}
